@@ -37,7 +37,38 @@ a{color:#1f3864}a:hover{color:#1f6b47}
   .top-nav::-webkit-scrollbar{display:none}
   .top-nav a{white-space:nowrap}
 }
+/* ヒーローの3D地球儀（接頭辞 sg-） */
+html.sg-on .sg-photo{display:none !important}
+/* 背景：左は黒に近い紺、右へ向かって深い海の青へ。地球儀の背後に水面のような淡い光を置く（--gx・--gy は地球儀の中心） */
+.sg-glow{--gx:calc(100% - 280px);--gy:53%;--gr:620px;position:absolute;top:0;left:0;width:100%;height:100%;display:none;pointer-events:none;background:radial-gradient(circle var(--gr) at var(--gx) var(--gy),rgba(46,160,205,.40) 0%,rgba(20,96,140,.26) 38%,rgba(6,34,58,0) 100%),radial-gradient(ellipse 80% 70% at 100% 100%,rgba(22,128,150,.26) 0%,rgba(0,0,0,0) 64%),radial-gradient(ellipse 60% 80% at 100% 0%,rgba(120,205,225,.12) 0%,rgba(0,0,0,0) 60%),linear-gradient(115deg,#02060d 0%,#04132a 34%,#062f4e 66%,#0a4a68 100%)}
+html.sg-on .sg-glow{display:block}
+.sg-globe{position:absolute;top:53%;right:-150px;width:860px;height:860px;transform:translateY(-50%);opacity:0;transition:opacity 1.4s ease;display:none;cursor:grab}
+.sg-globe:active{cursor:grabbing}
+html.sg-on .sg-globe{display:block}
+.sg-globe.is-ready{opacity:1}
+.sg-globe .scene-nav-info,.sg-globe .scene-tooltip{display:none !important}
+.sg-shade{pointer-events:none}
+.hero-inner{pointer-events:none}
+.hero-inner > *{pointer-events:auto}
+.sg-label{pointer-events:none}
+.sg-label span{display:block;transform:translate(14px,-22px);white-space:nowrap;font-family:'Noto Sans JP','Noto Sans CJK JP',sans-serif;font-size:12px;font-weight:500;line-height:16px;color:#ffffff;background:rgba(4,16,32,.70);border:1px solid rgba(255,255,255,.30);border-radius:2px;padding:3px 8px}
+@media (max-width: 1040px){
+  .sg-globe{right:-190px;width:760px;height:760px}
+  .sg-glow{--gx:calc(100% - 190px);--gr:540px}
+  html.sg-on .sg-shade{background:linear-gradient(90deg,rgba(0,0,0,.9) 0%,rgba(0,0,0,.8) 48%,rgba(0,0,0,.2) 84%,rgba(0,0,0,0) 100%) !important}
+}
+@media (max-width: 900px){
+  .sg-globe{top:-52px;left:50%;right:auto;width:440px;height:440px;margin-left:-220px;transform:none;pointer-events:none}
+  .sg-glow{--gx:50%;--gy:168px;--gr:340px}
+  html.sg-on .sg-shade{background:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,0) 230px,rgba(0,0,0,.72) 330px,rgba(0,0,0,.80) 100%) !important}
+  html.sg-on .hero-inner{padding-top:318px !important}
+}
+@media (hover: none){.sg-globe{pointer-events:none}}
 </style>
+<script>
+/* WebGL が使える環境だけ地球儀に切り替える（使えない環境は従来の写真のまま） */
+(function(){try{var c=document.createElement('canvas');if(window.WebGLRenderingContext&&(c.getContext('webgl2')||c.getContext('webgl'))){document.documentElement.className+=' sg-on';}}catch(e){}})();
+</script>
 </head>
 <body>
 <div style="width: 100%; box-sizing: border-box; background: #ffffff; color: #000000; font-family: 'Times New Roman', 'Noto Serif JP', 'Noto Serif CJK JP', serif; font-size: 16px; line-height: 30px;">
@@ -61,8 +92,10 @@ a{color:#1f3864}a:hover{color:#1f6b47}
 
   <!-- Hero -->
   <section id="top" style="position: relative; overflow: hidden; background: #111111; color: #ffffff;">
-    <img src="assets/hero.jpg" alt="" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; display: block;">
-    <div aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.15) 75%, rgba(0,0,0,0) 100%);"></div>
+    <img class="sg-photo" src="assets/hero.jpg" loading="lazy" alt="" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; display: block;">
+    <div class="sg-glow" aria-hidden="true"></div>
+    <div id="sg-globe" class="sg-globe" role="img" aria-label="大阪とバンコクを結ぶ航空路と海上ルートを示す3D地球儀 / 3D globe showing air and sea routes between Osaka and Bangkok"></div>
+    <div class="sg-shade" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.15) 75%, rgba(0,0,0,0) 100%);"></div>
     <div class="hero-inner wrap" style="position: relative; max-width: 1120px; margin: 0 auto; padding: 64px 16px 56px; display: flex; flex-direction: column; gap: 20px;">
       <p style="margin: 0; font-family: 'Noto Sans JP', 'Noto Sans CJK JP', sans-serif; font-size: 14px; font-weight: 500; line-height: 20px; color: #c8c8c8;">Cross-border Consulting｜Osaka × Bangkok</p>
       <h1 class="hero-h1" style="margin: 0; color: #ffffff; font-family: 'Noto Sans JP', 'Noto Sans CJK JP', sans-serif; font-size: 40px; font-weight: 700; line-height: 56px; max-width: 640px;">提案で終わらない。<br>仕組みをつくり、ともに育てる。</h1>
@@ -158,14 +191,14 @@ a{color:#1f3864}a:hover{color:#1f6b47}
       </div>
       <div class="proj-track" id="proj-track" style="display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 32px) / 2); grid-template-rows: auto auto auto auto auto; column-gap: 32px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none;">
         <article style="display: grid; grid-template-rows: subgrid; grid-row: span 5; row-gap: 12px; padding: 24px; border-left: 3px solid #1f3864; min-width: 0; box-sizing: border-box; scroll-snap-align: start;">
-          <img src="assets/bangkok.jpg" alt="バンコク市街の眺め" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;">
+          <img src="assets/bangkok.jpg" alt="バンコク市街の眺め" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block;">
           <p style="margin: 0; font-family: 'Noto Sans JP', 'Noto Sans CJK JP', sans-serif; font-size: 12px; font-weight: 500; line-height: 20px; color: #1f3864;">タイ｜法人設立・運営の受託</p>
           <h3 style="margin: 0; font-family: 'Noto Sans JP', 'Noto Sans CJK JP', sans-serif; font-size: 18px; font-weight: 700; line-height: 28px;">NEXEED株式会社から受託した、タイ現地法人 W-LINK (THAILAND) CO., LTD. の設立・運営サポート</h3>
           <p style="margin: 0; font-size: 14px; line-height: 24px;">NEXEED株式会社の委託を受け、タイ現地法人の設立準備から登記・許認可・体制整備までを手がけ、2025年11月の設立後は代表の村上が代表取締役として運営を引き受けています。同社は日本企業のタイ向け輸出サポートと現地調整を行い、タイ製品の日本導入ではタイ側の窓口として機能しています。「法人をつくる」だけでなく「回す」ところまでを、受託の形で提供している事例です。</p>
           <p style="margin: 0; font-size: 12px; line-height: 20px; color: #595959;">Commissioned by NEXEED Inc., we handled the incorporation, licensing and set-up of W-LINK (THAILAND) CO., LTD., founded in November 2025, and now run it, with our representative serving as its Managing Director. The company provides export support and local coordination in Thailand and acts as the Thai-side counterpart when bringing Thai products to Japan.</p>
         </article>
         <article style="display: grid; grid-template-rows: subgrid; grid-row: span 5; row-gap: 12px; padding: 24px; border-left: 3px solid #1f3864; min-width: 0; box-sizing: border-box; scroll-snap-align: start;">
-          <div style="width: 100%; aspect-ratio: 4 / 3; background: #e9ebef; box-sizing: border-box; padding: 8%; display: flex; align-items: center; justify-content: center; gap: 6%;">
+          <div style="width: 100%; aspect-ratio: 16 / 9; background: #e9ebef; box-sizing: border-box; padding: 8%; display: flex; align-items: center; justify-content: center; gap: 6%;">
             <img src="assets/geneus-human.png" alt="GENEUS 人用DNA検査 ロゴ" style="width: 47%; height: auto; aspect-ratio: 1 / 1; display: block;">
             <img src="assets/geneus-pet.png" alt="GENEUS pet 犬用DNA検査 ロゴ" style="width: 47%; height: auto; aspect-ratio: 1 / 1; display: block;">
           </div>
@@ -175,14 +208,14 @@ a{color:#1f3864}a:hover{color:#1f6b47}
           <p style="margin: 0; font-size: 12px; line-height: 20px; color: #595959;">Supporting the Japan launch of Geneus Genetics' human and canine DNA test kits, from negotiating the exclusive Japan distribution rights with the Thai head office, alongside Bellect Inc., the exclusive distributor for Japan: distribution structure, import and regulatory review, Japanese localisation, and trade-show preparation.</p>
         </article>
         <article style="display: grid; grid-template-rows: subgrid; grid-row: span 5; row-gap: 12px; padding: 24px; border-left: 3px solid #1f3864; min-width: 0; box-sizing: border-box; scroll-snap-align: start;">
-          <img src="assets/kaniva-logo.png" alt="Kaniva ロゴ" style="width: 100%; aspect-ratio: 4 / 3; box-sizing: border-box; border: 1px solid #d9d9d9; object-fit: contain; background: #ffffff; display: block;">
+          <img src="assets/kaniva-logo.png" alt="Kaniva ロゴ" style="width: 100%; aspect-ratio: 16 / 9; box-sizing: border-box; border: 1px solid #d9d9d9; object-fit: contain; background: #ffffff; display: block;">
           <p style="margin: 0; font-family: 'Noto Sans JP', 'Noto Sans CJK JP', sans-serif; font-size: 12px; font-weight: 500; line-height: 20px; color: #1f3864;">タイ → 日本｜ペットフード</p>
           <h3 style="margin: 0; font-family: 'Noto Sans JP', 'Noto Sans CJK JP', sans-serif; font-size: 18px; font-weight: 700; line-height: 28px;">Kaniva Japan株式会社の日本販売支援</h3>
           <p style="margin: 0; font-size: 14px; line-height: 24px;">お肉を第一主原料に、小麦・グルテン・とうもろこしを使わないタイ発のペットフード「カニワ」。タイ国内1,300店以上のペットショップで扱われ、15か国以上に輸出されているブランドです。2026年の日本上陸にあたり、全22商品の日本展開を市場参入の設計段階から支えています。インターペット大阪2026への出展や公式オンラインストアの開設を経て、日本での定着を目指しています。</p>
           <p style="margin: 0; font-size: 12px; line-height: 20px; color: #595959;">Kaniva is a meat-first, wheat-, gluten- and corn-free pet food brand from Thailand, sold in over 1,300 pet shops nationwide and exported to more than 15 countries. For its 2026 Japan debut, we support the launch of all 22 products, from its first showing at Interpets Osaka 2026 and the opening of its official online store onward.</p>
         </article>
         <article style="display: grid; grid-template-rows: subgrid; grid-row: span 5; row-gap: 12px; padding: 24px; border-left: 3px solid #1f6b47; min-width: 0; box-sizing: border-box; scroll-snap-align: start;">
-          <img src="assets/backbar.png" alt="BACKBAR SALON SUPPLY" style="width: 100%; aspect-ratio: 4 / 3; box-sizing: border-box; padding: 4% 0; object-fit: contain; background: #1b1b1b; display: block;">
+          <img src="assets/backbar.png" alt="BACKBAR SALON SUPPLY" style="width: 100%; aspect-ratio: 16 / 9; box-sizing: border-box; padding: 4% 0; object-fit: contain; background: #1b1b1b; display: block;">
           <p style="margin: 0; font-family: 'Noto Sans JP', 'Noto Sans CJK JP', sans-serif; font-size: 12px; font-weight: 500; line-height: 20px; color: #1f6b47;">日本｜美容部門</p>
           <h3 style="margin: 0; font-family: 'Noto Sans JP', 'Noto Sans CJK JP', sans-serif; font-size: 18px; font-weight: 700; line-height: 28px;">サロン向け卸売サービス「BACKBAR」の立ち上げ</h3>
           <p style="margin: 0; font-size: 14px; line-height: 24px;">理美容製品を、サロンと美容ディーラーへ会員制で卸すサービスを2026年10月に開始しました。LINE公式アカウントを窓口に、取扱メーカーを随時広げています。BACKBARでの掲載・卸販売をご希望のメーカー様からのお問い合わせもお待ちしています。</p>
@@ -342,6 +375,108 @@ a{color:#1f3864}a:hover{color:#1f6b47}
   function step(dir){var c=el.firstElementChild;var w=c?c.getBoundingClientRect().width+32:el.clientWidth;el.scrollBy({left:dir*w,behavior:'smooth'});}
   document.getElementById('proj-prev').addEventListener('click',function(){step(-1)});
   document.getElementById('proj-next').addEventListener('click',function(){step(1)});
+})();
+</script>
+<script>
+/* ヒーローの3D地球儀：globe.gl 2.33.0（assets/globe/ に自前ホスト） */
+(function(){
+  var root=document.documentElement, host=document.getElementById('sg-globe');
+  if(!host||root.className.indexOf('sg-on')<0) return;
+  var reduce=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var POV={lat:13,lng:119};
+
+  // 読み込みや初期化に失敗したら従来の写真へ戻す
+  function fallback(){root.className=root.className.replace(' sg-on','');}
+
+  function init(){
+    var cities=[
+      {name:'大阪 Osaka',lat:34.69,lng:135.50,main:true},
+      {name:'バンコク Bangkok',lat:13.75,lng:100.50,main:true}
+    ];
+    var ports=[{lat:13.08,lng:100.88},{lat:34.65,lng:135.43}];
+    var route={startLat:13.69,startLng:100.75,endLat:34.43,endLng:135.23};
+    var air=[{r:route,base:true},{r:route,base:false}];
+    // 海上ルートは経由点を手で置いた目安の線（実際の定期航路ではない）
+    var sea=[{pts:[[13.08,100.88],[11.5,101.8],[9.0,104.5],[8.3,106.8],[10.5,109.8],[14.5,111.5],
+                   [18.5,114.0],[21.5,118.5],[23.0,121.8],[26.0,124.5],[30.0,129.5],[32.5,132.2],
+                   [33.5,134.8],[34.65,135.43]]}];
+
+    var g=Globe({animateIn:false,rendererConfig:{antialias:true,alpha:true}})(host)
+      .width(host.clientWidth).height(host.clientHeight)
+      .backgroundColor('rgba(0,0,0,0)')
+      .globeImageUrl('assets/globe/earth-stratecta.jpg')
+      .bumpImageUrl('assets/globe/earth-topology.png')
+      .showAtmosphere(true).atmosphereColor('#74d4ee').atmosphereAltitude(0.14)
+      .pointsData(cities.concat(ports)).pointLat('lat').pointLng('lng')
+      .pointColor(function(d){return d.main?'#f2a33a':'#7fe7e0';})
+      .pointAltitude(function(d){return d.main?0.012:0.006;})
+      .pointRadius(function(d){return d.main?0.42:0.22;})
+      .ringsData(reduce?[]:cities).ringLat('lat').ringLng('lng')
+      .ringColor(function(){return function(t){return 'rgba(242,163,58,'+(0.75*(1-t)).toFixed(3)+')';};})
+      .ringMaxRadius(3.4).ringPropagationSpeed(1.1).ringRepeatPeriod(2400)
+      .arcsData(air)
+      .arcStartLat(function(d){return d.r.startLat;}).arcStartLng(function(d){return d.r.startLng;})
+      .arcEndLat(function(d){return d.r.endLat;}).arcEndLng(function(d){return d.r.endLng;})
+      .arcColor(function(d){return d.base?'rgba(127,231,224,0.5)':['rgba(233,255,253,0.95)','rgba(127,231,224,0.95)'];})
+      .arcStroke(function(d){return d.base?0.4:0.7;})
+      .arcAltitudeAutoScale(0.62)
+      .arcDashLength(function(d){return d.base?1:0.38;})
+      .arcDashGap(function(d){return d.base?0:0.62;})
+      .arcDashAnimateTime(function(d){return (d.base||reduce)?0:3200;})
+      .pathsData(sea).pathPoints('pts')
+      .pathPointLat(function(p){return p[0];}).pathPointLng(function(p){return p[1];})
+      .pathPointAlt(0.004).pathColor(function(){return 'rgba(63,181,168,0.9)';}).pathStroke(1.5)
+      .pathDashLength(0.05).pathDashGap(0.025).pathDashAnimateTime(reduce?0:14000)
+      .htmlElementsData(cities).htmlLat('lat').htmlLng('lng').htmlAltitude(0.02)
+      .htmlElement(function(d){var o=document.createElement('div');o.className='sg-label';var s=document.createElement('span');s.textContent=d.name;o.appendChild(s);return o;})
+      .onGlobeReady(function(){
+        var m=g.globeMaterial();
+        // 海岸線の光を陰の側でも保つ
+        if(m&&m.map&&m.emissive){m.emissive.set('#ffffff');m.emissiveMap=m.map;m.emissiveIntensity=0.5;m.needsUpdate=true;}
+        host.className+=' is-ready';
+      });
+
+    var ctl=g.controls();
+    ctl.enableZoom=false; ctl.enablePan=false;
+
+    // 日本とタイが常に見える範囲に回転を制限する
+    g.pointOfView({lat:POV.lat,lng:POV.lng,altitude:reduce?2.0:2.5},0);
+    ctl.update();
+    var a0=ctl.getAzimuthalAngle(), p0=ctl.getPolarAngle();
+    ctl.minAzimuthAngle=a0-0.42; ctl.maxAzimuthAngle=a0+0.42;
+    ctl.minPolarAngle=Math.max(0.2,p0-0.28); ctl.maxPolarAngle=Math.min(Math.PI-0.2,p0+0.28);
+
+    if(!reduce){
+      setTimeout(function(){g.pointOfView({lat:POV.lat,lng:POV.lng,altitude:2.0},2600);},500);
+      // ゆっくり左右に首を振る（振れ幅の端で向きを反転）
+      setTimeout(function(){
+        ctl.autoRotate=true; ctl.autoRotateSpeed=0.22;
+        var last=null, SWAY=0.14;
+        setInterval(function(){
+          var a=ctl.getAzimuthalAngle(), d=Math.abs(a-a0);
+          // 振れ幅の外へ向かっているとき、または端で止まったときに反転
+          if(last!==null&&((d>SWAY&&d>Math.abs(last-a0))||Math.abs(a-last)<1e-5)) ctl.autoRotateSpeed=-ctl.autoRotateSpeed;
+          last=a;
+        },400);
+      },3400);
+    }
+
+    // 画面外では描画を止める
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){g.resumeAnimation();}else{g.pauseAnimation();}});},{threshold:0.02}).observe(host);
+    }
+    var rt=null;
+    window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){g.width(host.clientWidth).height(host.clientHeight);},150);});
+  }
+
+  function load(){
+    var s=document.createElement('script');
+    s.src='assets/globe/globe.gl.min.js';
+    s.onload=function(){try{init();}catch(e){if(window.console)console.error(e);fallback();}};
+    s.onerror=fallback;
+    document.body.appendChild(s);
+  }
+  if(document.readyState==='complete') load(); else window.addEventListener('load',load);
 })();
 </script>
 </body>
