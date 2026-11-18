@@ -17,7 +17,7 @@
 
 ## 関連サイト
 
-- [BACKBAR](https://stratecta.github.io/backbar/)：株式会社STRATECTA 美容事業部による、サロン・美容ディーラー専用の美容商材の卸（会員制）
+- [BACKBAR](https://backbar.stratecta-inc.com/)：株式会社STRATECTA 美容事業部による、サロン・美容ディーラー専用の美容商材の卸（会員制）
 
 ## English
 
