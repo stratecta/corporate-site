@@ -9,6 +9,13 @@
     var m = document.querySelector('meta[name="ga-id"]');
     var id = m && m.content.trim();
     if (!id || !/^G-[A-Z0-9]+$/.test(id)) return;          // empty or invalid: send nothing
+    // 当社の端末を計測から外す：?ga=off を一度開くとその端末では送らない（?ga=on で戻す）
+    try {
+      var q = location.search;
+      if (/[?&]ga=off(&|$)/.test(q)) localStorage.setItem('stratecta_ga_optout', '1');
+      if (/[?&]ga=on(&|$)/.test(q)) localStorage.removeItem('stratecta_ga_optout');
+      if (localStorage.getItem('stratecta_ga_optout') === '1') return;
+    } catch (e) {}
     var s = document.createElement('script');
     s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
     document.head.appendChild(s);
