@@ -1,0 +1,24 @@
+# 株式会社STRATECTA（STRATECTA Inc.）
+
+> 大阪とバンコクを拠点とするクロスボーダーコンサルティング会社。中小企業の経営相談、日本企業のタイ進出・現地運営、タイ発の製品・サービスの日本導入を支援し、AI導入・AI動画制作、事業承継・M&A支援、サロン向け美容商材の卸「BACKBAR」も展開している。
+
+- 所在地：〒530-0001 大阪府大阪市北区梅田1-2-2 大阪駅前第2ビル12-12（タイ・バンコクでも活動）
+- 代表者：代表取締役 CEO 村上 大輔（Daisuke Murakami）
+- 設立：2025年9月2日
+- 連絡先：info@stratecta-inc.com／06-7777-6267
+
+## ページ
+
+- [トップページ](https://stratecta-inc.com/)：事業内容、現在の主な活動、強み、代表メッセージ、会社概要、お問い合わせ
+- [AI動画制作](https://stratecta-inc.com/video.html)：生成AIによる会社紹介・店舗紹介・SNS向け動画（横型・縦型）の制作と、その流れ
+- [中小M&Aガイドライン遵守の宣言](https://stratecta-inc.com/ma-declaration.html)
+- [M&A支援の手数料体系](https://stratecta-inc.com/ma-fees.html)
+- [プライバシーポリシー・外部送信について](https://stratecta-inc.com/privacy.html)
+
+## 関連サイト
+
+- [BACKBAR](https://stratecta.github.io/backbar/)：株式会社STRATECTA 美容事業部による、サロン・美容ディーラー専用の美容商材の卸（会員制）
+
+## English
+
+STRATECTA Inc. is a cross-border consulting firm based in Osaka, Japan and Bangkok, Thailand. It supports management consulting for small and mid-sized businesses, Thailand market entry and local operations for Japanese companies, and bringing Thai products and services to Japan, and also offers AI adoption and AI video production, SME succession and M&A advisory, and BACKBAR, a wholesale supplier of beauty products for salons.
