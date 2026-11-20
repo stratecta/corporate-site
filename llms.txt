@@ -10,6 +10,7 @@
 ## ページ
 
 - [トップページ](https://stratecta-inc.com/)：事業内容、現在の主な活動、強み、代表メッセージ、会社概要、お問い合わせ
+- [タイ進出支援](https://stratecta-inc.com/thailand.html)：日本企業のタイ進出の計画づくり、現地法人の設立（設立準備・登記・許認可・体制整備）、設立後の運営支援、輸出入・現地販売の商流設計
 - [AI動画制作](https://stratecta-inc.com/video.html)：生成AIによる会社紹介・店舗紹介・SNS向け動画（横型・縦型）の制作と、その流れ
 - [中小M&Aガイドライン遵守の宣言](https://stratecta-inc.com/ma-declaration.html)
 - [M&A支援の手数料体系](https://stratecta-inc.com/ma-fees.html)
